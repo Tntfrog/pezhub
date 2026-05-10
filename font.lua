@@ -1,10 +1,19 @@
-local FontModule = {}
+local player = game.Players.LocalPlayer
+local font = Font.new("rbxassetid://12187375716")
 
-FontModule.Fonts = {
-	Gotham = Enum.Font.Gotham,
-	Bold = Enum.Font.GothamBold,
-	Code = Enum.Font.Code,
-	SourceSans = Enum.Font.SourceSans,
-}
+local function apply(obj)
+	if obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
+		obj.FontFace = font
+	end
+end
 
-return FontModule
+local function scanUI()
+	local gui = player:WaitForChild("PlayerGui")
+	for _, obj in ipairs(gui:GetDescendants()) do
+		apply(obj)
+	end
+end
+
+scanUI()
+
+player.PlayerGui.DescendantAdded:Connect(apply)
